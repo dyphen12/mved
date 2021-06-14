@@ -1,0 +1,11 @@
+Package: mved
+Type: Package
+Title: Multi-variate Earning Dynamics
+Version: 0.1.0
+Author: Alexis Wong
+Maintainer: Alexis Wong <alexiswong10@gmail.com>
+Description: Model the dynamics of a multi-variate earning process.
+Imports: forecast, tseries, marima, dplyr
+License: MIT License.
+Encoding: UTF-8
+LazyData: true
