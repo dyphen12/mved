@@ -1,4 +1,5 @@
 # Multi-variate Earning Dynamics
+#THIS IS THE DEV VERSION!!!
 #
 # Author: Alexis Wong (@dyphen12).
 #
