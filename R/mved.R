@@ -126,17 +126,13 @@ multivariate <- function(x) {
 
   #Random Walk
 
-  #fit1 <- marima.sim(list(ar=fitMARIMA$coef["ar0"],ma=fitMARIMA$coef["ma0"]),tam)
-
-  RWmodel <- marima.sim(kvar = 13, ar.model = fitMARIMA$coef["ar0"], ma.model = fitMARIMA$coef["ma0"], nsim = tam,  averages = fitMARIMA$averages)
+  RWmodel <- marima.sim(kvar = tokvar, ar.model = fitMARIMA$coef["ar0"], ma.model = fitMARIMA$coef["ma0"], nsim = tam,  averages = fitMARIMA$averages)
 
   RW <- diff(RWmodel)
 
   #Permanent Component
 
   Pit <- RW
-
-  # write.csv(Pit,"F:/Users/Möebius/Documents/Prisma/Christos Makridis/Earning Dynamics Package/mved/data/Pit_simple.csv", row.names = FALSE)
 
   # Earning Dynamics Equation
 
@@ -148,6 +144,33 @@ multivariate <- function(x) {
 }
 
 edequation <- function(x, y){
+
+
+
+}
+
+permanentcomp <- function(x){
+
+
+  library(marima)
+
+  # Transitory Component:
+
+  # Assuming low order MARIMA
+
+  fitMARIMA <- marima(x)
+
+  resMARIMA = resid(fitMARIMA)
+
+  preTit = resMARIMA
+
+  # Resultant Transitory Component
+
+  Tit <- as.data.frame(t(preTit))
+
+  plot.ts(Tit)
+
+  return(Tit);
 
 
 
