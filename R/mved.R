@@ -1,7 +1,7 @@
 # Multi-variate Earning Dynamics
-#THIS IS THE DEV VERSION!!!
 #
-# Author: Alexis Wong (@dyphen12).
+#
+#
 #
 #
 # This is a first implementation of the research on Earning Dynamics modeling improvement.
@@ -259,4 +259,6 @@ permanentcomp <- function(x){
   return(Pit);
 
 }
+
+
 

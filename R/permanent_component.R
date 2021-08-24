@@ -41,6 +41,7 @@ RW <- diff(RWmodel)
 Pit <- RW
 
 # write.csv(Pit,"F:/Users/Möebius/Documents/Prisma/Christos Makridis/Earning Dynamics Package/mved/data/Pit_simple.csv", row.names = FALSE)
+# write.csv(tran,"F:/Users/Möebius/Documents/GitHub/mved/data/Tit(nlsy_min).csv", row.names = FALSE)
 
 # Earning Dynamics Equation
 

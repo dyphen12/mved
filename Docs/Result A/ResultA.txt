@@ -1,0 +1,5 @@
+Result A:
+
+Info:
+
+Dataset: /nlsy_min.csv
