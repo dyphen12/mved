@@ -1,9 +1,6 @@
 # Multi-variate Earning Dynamics
 #
 #
-#
-#
-#
 # This is a first implementation of the research on Earning Dynamics modeling improvement.
 # which models the dynamics of an earning process. Here we implement an multi-variate approach.
 #
@@ -67,6 +64,8 @@ univariate <- function(x) {
   modeldata = data.frame(Pit,Tit)
   ymodeldata = modeldata %>% replace(is.na(.), 0) %>% mutate(Yit = rowSums(.[1:2]))
   Decomposition = ymodeldata[1:3]
+
+  plot.ts(ymodeldata)
 
   return(ymodeldata);
 
@@ -142,6 +141,9 @@ multivariate <- function(x) {
   Yit <- Pit + Tit
 
   F_temp <- Yit
+
+  plot.ts(F_temp)
+
   return(F_temp);
 
 }
@@ -151,6 +153,9 @@ mvedequation <- function(Pit, Tit){
   Yit <- Pit + Tit
 
   F_temp <- Yit
+
+  plot.ts(F_temp)
+
   return(F_temp);
 
 }
@@ -160,6 +165,8 @@ uvedequation <- function(Pit, Tit){
   modeldata = data.frame(Pit,Tit)
   ymodeldata = modeldata %>% replace(is.na(.), 0) %>% mutate(Yit = rowSums(.[1:2]))
   Decomposition = ymodeldata[1:3]
+
+  plot.ts(ymodeldata)
 
   return(ymodeldata);
 
@@ -184,6 +191,8 @@ transitorycomp <- function(x){
   # Transitory Component
 
   Tit <- as.data.frame(t(preTit))
+
+  plot.ts(Tit)
 
   return(Tit);
 
@@ -256,9 +265,108 @@ permanentcomp <- function(x){
 
   # Earning Dynamics Equation
 
+  plot.ts(Pit)
+
   return(Pit);
 
 }
 
+mvedmodel <- function(x){
+
+  library(marima)
+
+  dataPR <- x
+
+  tokvar <- ncol(dataPR)
+
+  Model1 <- define.model(kvar=tokvar, ar=c(1, 0), ma=c(1), reg.var=13)
+
+  fitMARIMA <- marima(dataPR, ar.pattern = Model1$coef["ar1"], ma.pattern = Model1$coef["ma1"])
+
+  resMARIMA = resid(fitMARIMA)
+
+  preTit = resMARIMA
+
+  # Transitory Component
+
+  Tit <- as.data.frame(t(preTit))
+
+  tam = nrow(Tit)
+
+  tam = tam+1
+
+  #Random Walk
+
+  RWmodel <- marima.sim(kvar = tokvar, ar.model = fitMARIMA$coef["ar0"], ma.model = fitMARIMA$coef["ma0"], nsim = tam,  averages = fitMARIMA$averages)
+
+  RW <- diff(RWmodel)
+
+  #Permanent Component
+
+  Pit <- RW
+
+  # Earning Dynamics Equation
+
+  Yit <- Pit + Tit
+
+  F_temp <- Yit
+
+  plot.ts(F_temp)
+
+  #THIS RETURNS THE MARIMA MODEL
+
+  return(fitMARIMA);
+
+
+
+}
+
+mvedrw <- function(x){
+
+  library(marima)
+
+  dataPR <- x
+
+  tokvar <- ncol(dataPR)
+
+  Model1 <- define.model(kvar=tokvar, ar=c(1, 0), ma=c(1), reg.var=13)
+
+  fitMARIMA <- marima(dataPR, ar.pattern = Model1$coef["ar1"], ma.pattern = Model1$coef["ma1"])
+
+  resMARIMA = resid(fitMARIMA)
+
+  preTit = resMARIMA
+
+  # Transitory Component
+
+  Tit <- as.data.frame(t(preTit))
+
+  tam = nrow(Tit)
+
+  tam = tam+1
+
+  #Random Walk
+
+  RWmodel <- marima.sim(kvar = tokvar, ar.model = fitMARIMA$coef["ar0"], ma.model = fitMARIMA$coef["ma0"], nsim = tam,  averages = fitMARIMA$averages)
+
+  RW <- diff(RWmodel)
+
+  #Permanent Component
+
+  Pit <- RW
+
+  # Earning Dynamics Equation
+
+  Yit <- Pit + Tit
+
+  F_temp <- Yit
+
+  plot.ts(F_temp)
+
+  #THIS RETURNS THE MARIMA MODEL
+
+  return(RW);
+
+}
 
 
