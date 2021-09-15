@@ -10,12 +10,9 @@ library(mved)
 # multivariate(nlsy_simplev2_min_pp)
 
 labinc = nlsy_simplev2_min_pp %>% select(starts_with("labinc"))
-wt = nlsy_simplev2_min_pp %>% select(starts_with("wt"))
 
-declabinc <- univariate(labinc)
-decwt <- univariate(wt)
+uvmodeldata <- univariate(labinc)
 
-plot.ts(declabinc)
-plot.ts(decwt)
+plot.ts(uvmodeldata)
 
-write.csv(decwt,"F:/Users/Möebius/Documents/GitHub/mved/Docs/Result B/VARS/decwt.csv", row.names = FALSE)
+write.csv(declabinc,"F:/Users/Möebius/Documents/GitHub/mved/Docs/Result B/VARS/declabinc.csv", row.names = FALSE)

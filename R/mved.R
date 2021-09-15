@@ -18,6 +18,7 @@
 
 library(forecast)
 
+# Complete Process
 
 univariate <- function(x) {
 
@@ -59,15 +60,19 @@ univariate <- function(x) {
   prePit = data.frame(process,RW_drift)
   postPit = prePit %>% replace(is.na(.), 0) %>% mutate(Pit = rowSums(.[1:2]))
 
-  Pit = postPit[3]
+  Pit = RW_drift
+
+  Yit2 = Pit + Tit
 
   modeldata = data.frame(Pit,Tit)
   ymodeldata = modeldata %>% replace(is.na(.), 0) %>% mutate(Yit = rowSums(.[1:2]))
-  Decomposition = ymodeldata[1:3]
+  Decomposition = ymodeldata[3]
 
-  plot.ts(ymodeldata)
+  uvmodeldata <- data.frame(Yit2, Pit, Tit)
 
-  return(ymodeldata);
+  plot.ts(uvmodeldata)
+
+  return(uvmodeldata);
 
 }
 
@@ -110,7 +115,7 @@ multivariate <- function(x) {
 
   tokvar <- ncol(dataPR)
 
-  Model1 <- define.model(kvar=tokvar, ar=c(1, 0), ma=c(1), reg.var=13)
+  Model1 <- define.model(kvar=tokvar, ar=c(1, 0), ma=c(1), reg.var=9)
 
   fitMARIMA <- marima(dataPR, ar.pattern = Model1$coef["ar1"], ma.pattern = Model1$coef["ma1"])
 
@@ -147,6 +152,8 @@ multivariate <- function(x) {
   return(F_temp);
 
 }
+
+# Separate Process
 
 mvedequation <- function(Pit, Tit){
 
@@ -271,6 +278,8 @@ permanentcomp <- function(x){
 
 }
 
+# RW and MARIMA Models
+
 mvedmodel <- function(x){
 
   library(marima)
@@ -368,5 +377,7 @@ mvedrw <- function(x){
   return(RW);
 
 }
+
+
 
 
