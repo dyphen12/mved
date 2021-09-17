@@ -133,7 +133,7 @@ multivariate <- function(x) {
 
   #Random Walk
 
-  RWmodel <- marima.sim(kvar = tokvar, ar.model = fitMARIMA$coef["ar0"], ma.model = fitMARIMA$coef["ma0"], nsim = tam,  averages = fitMARIMA$averages)
+  RWmodel <- marima.sim(kvar = tokvar, ar.model = fitMARIMA$coef["ar0"],multivariate  ma.model = fitMARIMA$coef["ma0"], nsim = tam,  averages = fitMARIMA$averages)
 
   RW <- diff(RWmodel)
 
