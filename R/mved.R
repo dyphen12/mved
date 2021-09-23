@@ -115,7 +115,7 @@ multivariate <- function(x) {
 
   tokvar <- ncol(dataPR)
 
-  Model1 <- define.model(kvar=tokvar, ar=c(1, 0), ma=c(1), reg.var=9)
+  Model1 <- define.model(kvar=tokvar, ar=c(1, 2), ma=c(1), reg.var=9)
 
   fitMARIMA <- marima(dataPR, ar.pattern = Model1$coef["ar1"], ma.pattern = Model1$coef["ma1"])
 
@@ -133,7 +133,7 @@ multivariate <- function(x) {
 
   #Random Walk
 
-  RWmodel <- marima.sim(kvar = tokvar, ar.model = fitMARIMA$coef["ar0"],multivariate  ma.model = fitMARIMA$coef["ma0"], nsim = tam,  averages = fitMARIMA$averages)
+  RWmodel <- marima.sim(kvar = tokvar, ar.model = fitMARIMA$coef["ar0"], ma.model = fitMARIMA$coef["ma0"], nsim = tam,  averages = fitMARIMA$averages)
 
   RW <- diff(RWmodel)
 
@@ -377,6 +377,10 @@ mvedrw <- function(x){
   return(RW);
 
 }
+
+
+
+
 
 
 
