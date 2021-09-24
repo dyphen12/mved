@@ -41,7 +41,7 @@ univariate <- function(x) {
 
   process = x
 
-  fit <- Arima(process, order=c(1,0,1))
+  fit <- Arima(process, order=c(1,2,1))
 
   res = resid(fit)
 
@@ -377,6 +377,44 @@ mvedrw <- function(x){
   return(RW);
 
 }
+
+#  Utils
+
+databyear <- function(x){
+
+  data <- x
+
+  dbyear <- data[order(data$year),]
+
+  plot.ts(dbyear)
+
+}
+
+databyage <- function(x){
+
+  data <- x
+
+  dbage <- data[order(data$age),]
+
+  plot.ts(dbage)
+
+  return(dbage)
+
+}
+
+
+# Measurement of Moments
+
+#Differences
+
+
+# Levels
+
+
+# Moments
+
+
+# V-shock
 
 
 
